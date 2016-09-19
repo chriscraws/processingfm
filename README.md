@@ -1,2 +1,2 @@
 # processingfm
-buggy experimental prototype FM synth + guy using processing
+buggy experimental prototype FM synth + gui using processing
