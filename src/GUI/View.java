@@ -51,7 +51,6 @@ public class View {
         float absy = absY() + y;
 
         return app.mouseX >= absx && app.mouseX <= absx + width && app.mouseY >= absy && app.mouseY <= absy + height;
-
     }
 
     private void renderChildren() {
