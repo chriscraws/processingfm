@@ -9,13 +9,14 @@ public class NumberView extends View implements MouseListener {
 
     private char[] digits = {'0', '0'};
     private float size = 51f; // pixels
-    private float sensitivity;
+    private float sensitivity = 7; // pixels per 1 value change
     private PFont font = app.createFont("helvetica", size, true);
-    private boolean mouseDown = false;
-    private PVector lastMousePosition = new PVector(0, 0);
+    private int selectedDigit = -1;
+    private float lastMouseY = mouseY;
 
     public NumberView(float x, float y) {
         super(x, y);
+        app.registerMouseListener(this);
     }
 
     private void drawDigit(int i) {
@@ -28,25 +29,24 @@ public class NumberView extends View implements MouseListener {
         app.text(digits[i], (size - glyph.width) / 2f, (size - glyph.height) / 2f - charTopOffset);
 
         app.popMatrix();
-
     }
 
     private void handleDrag() {
-        PVector delta = PVector.sub(lastMousePosition, new PVector(mouseX, mouseY));
         
-
     }
 
     @Override
     public void draw() {
 
-        if (mouseDown) {
-            handleDrag();
-        }
-
         app.textFont(font, size);
         app.textSize(size);
         app.textAlign(PConstants.LEFT, PConstants.TOP);
+        app.stroke(1f);
+        app.noFill();
+
+        if (selectedDigit >= 0) {
+            handleDrag();
+        }
 
         for (int i = 0; i < digits.length; i++) {
             drawDigit(i);
@@ -65,15 +65,17 @@ public class NumberView extends View implements MouseListener {
 
     @Override
     public void mousePressed() {
-        if (isMouseOverRect(0, 0, digits.length * size, digits.length * size)) {
-            mouseDown = true;
-            lastMousePosition.x = mouseX;
-            lastMousePosition.y = mouseY;
+        for (int digit = 0; digit < digits.length; digit++) {
+            if (isMouseOverRect(digit * size, 0, size, size)) {
+                selectedDigit = digit;
+                lastMouseY = mouseY;
+                return;
+            }
         }
     }
 
     @Override
     public void mouseReleased() {
-        mouseDown = false;
+        selectedDigit = -1;
     }
 }
