@@ -35,8 +35,8 @@ public class View {
         app.pushStyle();
         app.translate(absX(), absY());
 
-        mouseX = app.mouseX + absX();
-        mouseY = app.mouseY + absY();
+        mouseX = app.mouseX - absX();
+        mouseY = app.mouseY - absY();
 
         draw();
 

@@ -32,7 +32,10 @@ public class NumberView extends View implements MouseListener {
     }
 
     private void handleDrag() {
-        
+        app.rect(selectedDigit * size, 0, size, size);
+
+        app.line(selectedDigit * size + 0.5f * size, size/2f, selectedDigit * size + 0.5f * size, mouseY);
+        app.line(selectedDigit * size, mouseY, (selectedDigit + 1) * size, mouseY);
     }
 
     @Override
