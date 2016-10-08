@@ -40,13 +40,19 @@ public class NumberView extends View implements MouseListener {
         app.line(selectedDigit * size + 0.5f * size, size/2f, selectedDigit * size + 0.5f * size, mouseY);
         app.line(selectedDigit * size, mouseY, (selectedDigit + 1) * size, mouseY);
 
-        int newValue = (originalDigits[selectedDigit] + increment) % 10;
-        if (newValue < 0) {
-            newValue += 10;
+
+        // increment digits to the left if high enough
+        for (int digit = selectedDigit; digit >= 0; digit--) {
+
+            int newValue = (originalDigits[digit] + increment) % 10;
+            if (newValue < 0) {
+                newValue += 10;
+            }
+
+            digits[digit] = (char) ('0' + newValue);
+
+            increment /= 10;
         }
-
-        digits[selectedDigit] = (char) ('0' + newValue);
-
     }
 
     @Override
