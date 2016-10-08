@@ -3,7 +3,6 @@ package GUI;
 import processing.core.PConstants;
 import processing.core.PFont.Glyph;
 import processing.core.PFont;
-import processing.core.PVector;
 
 public class NumberView extends View implements MouseListener {
 
@@ -12,7 +11,6 @@ public class NumberView extends View implements MouseListener {
     private float size = 51f; // pixels
     private PFont font = app.createFont("helvetica", size, true);
     private int selectedDigit = -1;
-    private float lastMouseY = mouseY;
 
     public NumberView(float x, float y) {
         super(x, y);
@@ -88,7 +86,6 @@ public class NumberView extends View implements MouseListener {
         for (int digit = 0; digit < digits.length; digit++) {
             if (isMouseOverRect(digit * size, 0, size, size)) {
                 selectedDigit = digit;
-                lastMouseY = mouseY;
                 for (int i = 0; i < originalDigits.length; i++) {
                     originalDigits[i] = digits[i] - '0';
                 }
