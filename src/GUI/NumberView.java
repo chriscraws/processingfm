@@ -8,11 +8,10 @@ import processing.core.PVector;
 public class NumberView extends View implements MouseListener {
 
     private char[] digits = {'0', '0'};
+    private int[] originalDigits = new int[2];
     private float size = 51f; // pixels
-    private float sensitivity = 7; // pixels per 1 value change
     private PFont font = app.createFont("helvetica", size, true);
     private int selectedDigit = -1;
-    private int baseValue = 0;
     private float lastMouseY = mouseY;
 
     public NumberView(float x, float y) {
@@ -41,7 +40,7 @@ public class NumberView extends View implements MouseListener {
         app.line(selectedDigit * size + 0.5f * size, size/2f, selectedDigit * size + 0.5f * size, mouseY);
         app.line(selectedDigit * size, mouseY, (selectedDigit + 1) * size, mouseY);
 
-        int newValue = (baseValue + increment) % 10;
+        int newValue = (originalDigits[selectedDigit] + increment) % 10;
         if (newValue < 0) {
             newValue += 10;
         }
