@@ -7,15 +7,26 @@ import processing.core.PFont;
 
 public class NumberView extends View implements MouseListener {
 
-    private char[] digits = {'0', '0'};
-    private int[] originalDigits = new int[2];
+    private char[] digits;
+    private int[] originalDigits;
     private float size = 51f; // pixels
     private PFont font = app.createFont("helvetica", size, true);
     private int selectedDigit = -1;
 
-    public NumberView(float x, float y) {
+    public NumberView(float x, float y, int numDigits) {
         super(x, y);
         app.registerMouseListener(this);
+
+        digits = new char[numDigits];
+        originalDigits = new int[numDigits];
+
+        for (int i = 0; i < numDigits; i++) {
+            digits[i] = '0';
+            originalDigits[i] = 0;
+        }
+
+    }
+
     }
 
     private void drawDigit(int i) {
