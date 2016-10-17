@@ -31,6 +31,12 @@ public class NumberView extends View implements MouseListener {
         maximum = (int) PApplet.pow(10, numDigits) - 1;
     }
 
+    public int getValue() {
+        int value = 0;
+        for (int i = 0; i < digits.length; i++) {
+            value += digits[i] * PApplet.pow(10, digits.length - i);
+        }
+        return value;
     }
 
     private void drawDigit(int i) {
