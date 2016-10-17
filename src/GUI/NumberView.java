@@ -12,6 +12,8 @@ public class NumberView extends View implements MouseListener {
     private float size = 51f; // pixels
     private PFont font = app.createFont("helvetica", size, true);
     private int selectedDigit = -1;
+    private int minimum;
+    private int maximum;
 
     public NumberView(float x, float y, int numDigits) {
         super(x, y);
@@ -25,6 +27,8 @@ public class NumberView extends View implements MouseListener {
             originalDigits[i] = 0;
         }
 
+        minimum = 0;
+        maximum = (int) PApplet.pow(10, numDigits) - 1;
     }
 
     }
