@@ -1,5 +1,6 @@
 package GUI;
 
+import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PFont.Glyph;
 import processing.core.PFont;
