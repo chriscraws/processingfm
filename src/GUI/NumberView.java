@@ -9,6 +9,7 @@ public class NumberView extends View implements MouseListener {
 
     private char[] digits;
     private int[] originalDigits;
+    private int originalValue;
     private float size = 51f; // pixels
     private PFont font = app.createFont("helvetica", size, true);
     private int selectedDigit = -1;
@@ -110,6 +111,7 @@ public class NumberView extends View implements MouseListener {
                 selectedDigit = digit;
                 for (int i = 0; i < originalDigits.length; i++) {
                     originalDigits[i] = digits[i] - '0';
+                    originalValue = getValue();
                 }
                 return;
             }
