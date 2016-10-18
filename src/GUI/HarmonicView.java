@@ -27,7 +27,7 @@ public class HarmonicView extends View {
         ratioKnobView.setLabel("Ratio");
         addChild(ratioKnobView);
 
-        numberView = new NumberView(350, 0);
+        numberView = new NumberView(350, 0, 2);
         addChild(numberView);
 
     }

@@ -62,17 +62,19 @@ public class NumberView extends View implements MouseListener {
         app.line(selectedDigit * size, mouseY, (selectedDigit + 1) * size, mouseY);
 
 
-        // increment digits to the left if high enough
-        for (int digit = selectedDigit; digit >= 0; digit--) {
+        int newValue = originalValue + increment * (int) PApplet.pow(10, digits.length - selectedDigit - 1);
 
-            int newValue = (originalDigits[digit] + increment) % 10;
-            if (newValue < 0) {
-                newValue += 10;
-            }
+        newValue = PApplet.max(newValue, minimum);
+        newValue = PApplet.min(newValue, maximum);
 
-            digits[digit] = (char) ('0' + newValue);
+        setDigits(newValue);
+    }
 
-            increment /= 10;
+    private void setDigits(int value) {
+        for (int digit = 0; digit < digits.length; digit++) {
+            // what is the value of 1 in this digit
+            int one = (int) PApplet.pow(10, digits.length - digit - 1);
+            app.text(one, mouseX + digit * 5, mouseY + 20);
         }
     }
 
