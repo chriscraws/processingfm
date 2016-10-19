@@ -35,7 +35,7 @@ public class NumberView extends View implements MouseListener {
     public int getValue() {
         int value = 0;
         for (int i = 0; i < digits.length; i++) {
-            value += digits[i] * PApplet.pow(10, digits.length - i);
+            value += ('0' - digits[i]) * PApplet.pow(10, digits.length - i - 1);
         }
         return value;
     }
@@ -61,7 +61,6 @@ public class NumberView extends View implements MouseListener {
         app.line(selectedDigit * size + 0.5f * size, size/2f, selectedDigit * size + 0.5f * size, mouseY);
         app.line(selectedDigit * size, mouseY, (selectedDigit + 1) * size, mouseY);
 
-
         int newValue = originalValue + increment * (int) PApplet.pow(10, digits.length - selectedDigit - 1);
 
         newValue = PApplet.max(newValue, minimum);
@@ -74,7 +73,18 @@ public class NumberView extends View implements MouseListener {
         for (int digit = 0; digit < digits.length; digit++) {
             // what is the value of 1 in this digit
             int one = (int) PApplet.pow(10, digits.length - digit - 1);
-            app.text(one, mouseX + digit * 5, mouseY + 20);
+
+            // what is the numerical value of this digit
+            //  digits   <-->   1   2   3   4
+            //  ind      <-->   0   1   2   3
+            //  power    <-->   3   2   1   0
+            //  ones     <-->   1   1   1   1
+
+            int digitValue = value / one;
+            value %= one;
+
+            // set each digit character
+            digits[digit] = (char) ('0' + digitValue);
         }
     }
 
@@ -113,8 +123,8 @@ public class NumberView extends View implements MouseListener {
                 selectedDigit = digit;
                 for (int i = 0; i < originalDigits.length; i++) {
                     originalDigits[i] = digits[i] - '0';
-                    originalValue = getValue();
                 }
+                originalValue = getValue();
                 return;
             }
         }
