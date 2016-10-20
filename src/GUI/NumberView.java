@@ -12,12 +12,14 @@ public class NumberView extends View implements MouseListener {
 
     private char[] digits;
     private int[] originalDigits;
-    private int originalValue;
+    private float originalValue;
+    private float instantaneousValue;
     private float size = 50f; // pixels
     private PFont font = app.createFont("helvetica", size, true);
     private int selectedDigit = -1;
     private int minimum;
     private int maximum;
+    private boolean absolute = false;
 
     public NumberView(float x, float y, int numDigits) {
         super(x, y);
@@ -35,12 +37,16 @@ public class NumberView extends View implements MouseListener {
         maximum = (int) PApplet.pow(10, numDigits) - 1;
     }
 
-    public int getValue() {
-        int value = 0;
-        for (int i = 0; i < digits.length; i++) {
-            value += ('0' - digits[i]) * PApplet.pow(10, digits.length - i - 1);
+    public float getValue() {
+        if (absolute) {
+            int value = 0;
+            for (int i = 0; i < digits.length; i++) {
+                value += ('0' - digits[i]) * PApplet.pow(10, digits.length - i - 1);
+            }
+            return value;
+        } else {
+            return originalValue + instantaneousValue;
         }
-        return value;
     }
 
     private void drawDigit(int i) {
@@ -55,16 +61,22 @@ public class NumberView extends View implements MouseListener {
         app.popMatrix();
     }
 
+    private float getMouseOffset() {
+        return -((mouseY - size * .5f) / 10f);
+    }
+
     private void handleDrag() {
         app.rect(selectedDigit * size, 0, size, size);
 
-        int increment = (int) -((mouseY - size * .5f) / 10f);
+        float increment = getMouseOffset();
 
         app.text(increment, mouseX, mouseY);
         app.line(selectedDigit * size + 0.5f * size, size/2f, selectedDigit * size + 0.5f * size, mouseY);
         app.line(selectedDigit * size, mouseY, (selectedDigit + 1) * size, mouseY);
 
-        int newValue = originalValue + increment * (int) PApplet.pow(10, digits.length - selectedDigit - 1);
+        instantaneousValue = originalValue + increment * (int) PApplet.pow(10, digits.length - selectedDigit - 1);
+
+        int newValue = (int) instantaneousValue;
 
         newValue = PApplet.max(newValue, minimum);
         newValue = PApplet.min(newValue, maximum);
@@ -128,6 +140,7 @@ public class NumberView extends View implements MouseListener {
                     originalDigits[i] = digits[i] - '0';
                 }
                 originalValue = getValue();
+                instantaneousValue = originalValue;
                 return;
             }
         }
