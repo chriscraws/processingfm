@@ -5,12 +5,15 @@ import processing.core.PConstants;
 import processing.core.PFont.Glyph;
 import processing.core.PFont;
 
+/**
+ * NumberView is an integer-selector. Click and drag a particular digit up or down to edit the value.
+ */
 public class NumberView extends View implements MouseListener {
 
     private char[] digits;
     private int[] originalDigits;
     private int originalValue;
-    private float size = 51f; // pixels
+    private float size = 50f; // pixels
     private PFont font = app.createFont("helvetica", size, true);
     private int selectedDigit = -1;
     private int minimum;
